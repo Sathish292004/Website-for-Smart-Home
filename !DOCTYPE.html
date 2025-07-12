@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartCity - Future of Urban Living</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --background: hsl(220, 25%, 8%);
+            --foreground: hsl(210, 40%, 98%);
+            --card: hsl(220, 25%, 12%);
+            --card-foreground: hsl(210, 40%, 98%);
+            --primary: hsl(195, 100%, 55%);
+            --primary-foreground: hsl(220, 25%, 8%);
+            --primary-glow: hsl(195, 100%, 75%);
+            --secondary: hsl(155, 65%, 45%);
+            --secondary-foreground: hsl(220, 25%, 8%);
+            --muted: hsl(220, 15%, 20%);
+            --muted-foreground: hsl(215, 20%, 65%);
+            --accent: hsl(270, 95%, 75%);
+            --border: hsl(220, 15%, 20%);
+            --tech-blue: hsl(195, 100%, 55%);
+            --tech-blue-light: hsl(195, 100%, 75%);
+            --eco-green: hsl(155, 65%, 45%);
+            --eco-green-light: hsl(155, 65%, 65%);
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background-color: var(--background);
+            color: var(--foreground);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
+        }
+
+        /* Header Styles */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: all 0.3s ease;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .logo-text {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--foreground);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .nav a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: var(--foreground);
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 6px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            color: var(--primary-foreground);
+            box-shadow: 0 10px 30px -10px rgba(0, 191, 255, 0.3);
+            border: 1px solid rgba(0, 191, 255, 0.2);
+        }
+
+        .btn-primary:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 191, 255, 0.4);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, var(--eco-green), var(--eco-green-light));
+            color: var(--secondary-foreground);
+            box-shadow: 0 10px 30px -10px rgba(16, 185, 129, 0.3);
+        }
+
+        .btn-secondary:hover {
+            transform: scale(1.05);
+        }
+
+        .btn-outline {
+            background: transparent;
+            color: var(--foreground);
+            border: 1px solid var(--border);
+        }
+
+        .btn-outline:hover {
+            background: var(--muted);
+        }
+
+        .mobile-menu {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--foreground);
+            cursor: pointer;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--background), hsl(220, 25%, 12%));
+        }
+
+        .hero-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.2;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600"><rect width="1000" height="600" fill="%23000"/><g fill="%2300bfff" opacity="0.1"><circle cx="200" cy="150" r="3"/><circle cx="400" cy="200" r="2"/><circle cx="600" cy="100" r="4"/><circle cx="800" cy="250" r="3"/><circle cx="300" cy="350" r="2"/><circle cx="700" cy="400" r="3"/><circle cx="500" cy="450" r="2"/><circle cx="150" cy="500" r="4"/></g></svg>') no-repeat center center;
+            background-size: cover;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+            max-width: 800px;
+        }
+
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(31, 41, 55, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--border);
+            border-radius: 9999px;
+            padding: 0.5rem 1rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .pulse-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--secondary);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-weight: bold;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            line-height: 1.6;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+
+        .scroll-indicator-inner {
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--primary);
+            border-radius: 20px;
+            display: flex;
+            justify-content: center;
+            padding-top: 8px;
+        }
+
+        .scroll-dot {
+            width: 4px;
+            height: 12px;
+            background: var(--primary);
+            border-radius: 2px;
+            animation: pulse 2s infinite;
+        }
+
+        /* Services Section */
+        .section {
+            padding: 5rem 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .section-description {
+            font-size: 1.25rem;
+            color: var(--muted-foreground);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .service-card {
+            background: linear-gradient(145deg, var(--card), hsl(220, 20%, 15%));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 8px 32px rgba(17, 24, 39, 0.4);
+        }
+
+        .service-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .service-icon {
+            transform: scale(1.1);
+        }
+
+        .service-status {
+            background: var(--secondary);
+            color: var(--secondary-foreground);
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .service-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--foreground);
+        }
+
+        .service-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .service-stats {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid var(--border);
+        }
+
+        .service-stats-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+        }
+
+        .service-stats-value {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        /* Stats Section */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        .stat-card {
+            background: linear-gradient(145deg, var(--card), hsl(220, 20%, 15%));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            box-shadow: 0 8px 32px rgba(17, 24, 39, 0.4);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .stat-trend {
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+
+        .stat-value {
+            font-size: 1.75rem;
+            font-weight: bold;
+            color: var(--foreground);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--muted);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--tech-blue), var(--tech-blue-light));
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+
+        .system-status {
+            background: linear-gradient(145deg, var(--card), hsl(220, 20%, 15%));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(17, 24, 39, 0.4);
+        }
+
+        .status-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .status-item {
+            text-align: center;
+        }
+
+        .status-indicator {
+            width: 12px;
+            height: 12px;
+            background: var(--secondary);
+            border-radius: 50%;
+            margin: 0 auto 0.5rem;
+            animation: pulse 2s infinite;
+        }
+
+        .status-label {
+            font-size: 0.875rem;
+            color: var(--muted-foreground);
+            margin-bottom: 0.25rem;
+        }
+
+        .status-value {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--foreground);
+        }
+
+        /* Contact Section */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+        }
+
+        .contact-info {
+            space-y: 1.5rem;
+        }
+
+        .contact-card {
+            background: linear-gradient(145deg, var(--card), hsl(220, 20%, 15%));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--tech-blue), var(--tech-blue-light));
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 20px rgba(0, 191, 255, 0.3);
+        }
+
+        .contact-form {
+            background: linear-gradient(145deg, var(--card), hsl(220, 20%, 15%));
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            box-shadow: 0 8px 32px rgba(17, 24, 39, 0.4);
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            background: rgba(75, 85, 99, 0.5);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            color: var(--foreground);
+            font-size: 0.875rem;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(0, 191, 255, 0.2);
+        }
+
+        .form-textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(31, 41, 55, 0.5);
+            border-top: 1px solid var(--border);
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-description {
+            color: var(--muted-foreground);
+            margin-bottom: 1rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--muted-foreground);
+            transition: color 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--primary);
+        }
+
+        .footer-section h3 {
+            font-weight: 600;
+            color: var(--foreground);
+            margin-bottom: 1rem;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-links a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--foreground);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .footer-legal {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-legal a {
+            color: var(--muted-foreground);
+            text-decoration: none;
+            font-size: 0.875rem;
+            transition: color 0.3s ease;
+        }
+
+        .footer-legal a:hover {
+            color: var(--foreground);
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-10px); }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in {
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav {
+                display: none;
+            }
+
+            .mobile-menu {
+                display: block;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .contact-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 1rem;
+            }
+
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"></polygon>
+                        </svg>
+                    </div>
+                    <span class="logo-text">SmartCity</span>
+                </div>
+                
+                <nav class="nav">
+                    <a href="#home">Home</a>
+                    <a href="#services">Services</a>
+                    <a href="#stats">Dashboard</a>
+                    <a href="#contact">Contact</a>
+                    <a href="#" class="btn btn-primary">Get Started</a>
+                </nav>
+                
+                <button class="mobile-menu" onclick="toggleMenu()">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <line x1="3" y1="6" x2="21" y2="6"></line>
+                        <line x1="3" y1="12" x2="21" y2="12"></line>
+                        <line x1="3" y1="18" x2="21" y2="18"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-bg"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">
+                    <div class="pulse-dot"></div>
+                    <span>Building the Future Today</span>
+                </div>
+                
+                <h1 class="hero-title">
+                    Welcome to the
+                    <span class="gradient-text">Smart City</span>
+                    of Tomorrow
+                </h1>
+                
+                <p class="hero-description">
+                    Experience seamless urban living with our integrated IoT infrastructure, 
+                    sustainable energy solutions, and data-driven city services.
+                </p>
+                
+                <div class="hero-actions">
+                    <a href="#services" class="btn btn-primary">
+                        Explore Services
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <line x1="5" y1="12" x2="19" y2="12"></line>
+                            <polyline points="12,5 19,12 12,19"></polyline>
+                        </svg>
+                    </a>
+                    <a href="#" class="btn btn-outline">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="5,3 19,12 5,21 5,3"></polygon>
+                        </svg>
+                        Watch Demo
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="scroll-indicator">
+            <div class="scroll-indicator-inner">
+                <div class="scroll-dot"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="section" style="background: linear-gradient(to bottom, var(--background), rgba(31, 41, 55, 0.5));">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">City Services</div>
+                <h2 class="section-title">
+                    Integrated Smart
+                    <span class="gradient-text" style="background: linear-gradient(135deg, var(--eco-green), var(--eco-green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Solutions</span>
+                </h2>
+                <p class="section-description">
+                    Our comprehensive platform connects every aspect of urban life through intelligent technology
+                </p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9L18 10V6c0-2-2-4-4-4H4c-2 0-4 2-4 4v10c0 1.1.9 2 2 2h2"></path>
+                                <circle cx="7" cy="17" r="2"></circle>
+                                <path d="M9 17h6"></path>
+                                <circle cx="17" cy="17" r="2"></circle>
+                            </svg>
+                        </div>
+                        <div class="service-status">Active</div>
+                    </div>
+                    <h3 class="service-title">Smart Transportation</h3>
+                    <p class="service-description">AI-powered traffic management and autonomous vehicle integration</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">98% uptime</span>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="service-status">Optimized</div>
+                    </div>
+                    <h3 class="service-title">Energy Grid</h3>
+                    <p class="service-description">Renewable energy distribution with smart grid technology</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">85% renewable</span>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.68 0C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1v7Z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-status">Secure</div>
+                    </div>
+                    <h3 class="service-title">Public Safety</h3>
+                    <p class="service-description">24/7 monitoring with predictive crime analytics</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">15% crime reduction</span>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M11.562 3.266a.5.5 0 0 1 .876 0L15.39 8.87a1 1 0 0 0 1.516.294L21.183 5.5a.5.5 0 0 1 .798.519L20.266 11.5a1 1 0 0 0 .294 1.516L24.224 16a.5.5 0 0 1-.519.798L18.224 15.083a1 1 0 0 0-1.516.294L13.756 20a.5.5 0 0 1-.876 0L9.928 14.377a1 1 0 0 0-1.516-.294L3.734 17.717a.5.5 0 0 1-.798-.519L4.651 11.716a1 1 0 0 0-.294-1.516L.683 7.216a.5.5 0 0 1 .519-.798L6.683 8.133a1 1 0 0 0 1.516-.294L11.562 3.266Z"></path>
+                            </svg>
+                        </div>
+                        <div class="service-status">Good</div>
+                    </div>
+                    <h3 class="service-title">Environmental</h3>
+                    <p class="service-description">Air quality monitoring and waste management systems</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">20% cleaner air</span>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M5 12.55a11 11 0 0 1 14.08 0"></path>
+                                <path d="M1.42 9a16 16 0 0 1 21.16 0"></path>
+                                <path d="M8.53 16.11a6 6 0 0 1 6.95 0"></path>
+                                <line x1="12" y1="20" x2="12.01" y2="20"></line>
+                            </svg>
+                        </div>
+                        <div class="service-status">Connected</div>
+                    </div>
+                    <h3 class="service-title">Connectivity</h3>
+                    <p class="service-description">5G network infrastructure and free public WiFi</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">99.9% coverage</span>
+                    </div>
+                </div>
+
+                <div class="service-card fade-in">
+                    <div class="service-header">
+                        <div class="service-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2v11Z"></path>
+                                <circle cx="12" cy="13" r="3"></circle>
+                            </svg>
+                        </div>
+                        <div class="service-status">Monitoring</div>
+                    </div>
+                    <h3 class="service-title">Smart Infrastructure</h3>
+                    <p class="service-description">IoT sensors for real-time city monitoring and maintenance</p>
+                    <div class="service-stats">
+                        <span class="service-stats-label">Performance</span>
+                        <span class="service-stats-value">10K+ sensors</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section id="stats" class="section" style="background: rgba(31, 41, 55, 0.3);">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Live Dashboard</div>
+                <h2 class="section-title">
+                    Real-time City
+                    <span class="gradient-text">Analytics</span>
+                </h2>
+                <p class="section-description">
+                    Monitor city performance with live data from thousands of connected sensors
+                </p>
+            </div>
+            
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"></polygon>
+                            </svg>
+                        </div>
+                        <div class="stat-trend">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"></polyline>
+                                <polyline points="16,7 22,7 22,13"></polyline>
+                            </svg>
+                            +5%
+                        </div>
+                    </div>
+                    <div class="stat-value">87%</div>
+                    <div class="stat-description">Renewable energy usage</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 87%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-trend">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,17 13.5,8.5 8.5,13.5 2,7"></polyline>
+                                <polyline points="16,17 22,17 22,11"></polyline>
+                            </svg>
+                            -12%
+                        </div>
+                    </div>
+                    <div class="stat-value">Good</div>
+                    <div class="stat-description">PM2.5 levels decreased</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 78%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-trend">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"></polyline>
+                                <polyline points="16,7 22,7 22,13"></polyline>
+                            </svg>
+                            +2.1%
+                        </div>
+                    </div>
+                    <div class="stat-value">2.4M</div>
+                    <div class="stat-description">Active citizens</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 95%"></div>
+                    </div>
+                </div>
+
+                <div class="stat-card fade-in">
+                    <div class="stat-header">
+                        <div class="stat-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v16Z"></path>
+                                <path d="M6 18h.01"></path>
+                                <path d="M10 18h.01"></path>
+                            </svg>
+                        </div>
+                        <div class="stat-trend">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polyline points="22,7 13.5,15.5 8.5,10.5 2,17"></polyline>
+                                <polyline points="16,7 22,7 22,13"></polyline>
+                            </svg>
+                            +8%
+                        </div>
+                    </div>
+                    <div class="stat-value">23%</div>
+                    <div class="stat-description">Water saved this month</div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" style="width: 68%"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="system-status">
+                <h3 class="service-title">System Status</h3>
+                <p class="service-description">All systems operational and performing optimally</p>
+                <div class="status-grid">
+                    <div class="status-item">
+                        <div class="status-indicator"></div>
+                        <div class="status-label">Transportation</div>
+                        <div class="status-value">Online</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator"></div>
+                        <div class="status-label">Energy Grid</div>
+                        <div class="status-value">Stable</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator"></div>
+                        <div class="status-label">Safety Systems</div>
+                        <div class="status-value">Active</div>
+                    </div>
+                    <div class="status-item">
+                        <div class="status-indicator"></div>
+                        <div class="status-label">IoT Network</div>
+                        <div class="status-value">Connected</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section" style="background: linear-gradient(to bottom, rgba(31, 41, 55, 0.3), var(--background));">
+        <div class="container">
+            <div class="section-header">
+                <div class="badge">Get in Touch</div>
+                <h2 class="section-title">
+                    Connect with
+                    <span class="gradient-text" style="background: linear-gradient(135deg, var(--eco-green), var(--eco-green-light)); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Smart City</span>
+                </h2>
+                <p class="section-description">
+                    Have questions about our services or want to learn more about smart city initiatives?
+                </p>
+            </div>
+            
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h3 style="font-size: 1.5rem; font-weight: bold; margin-bottom: 1.5rem; color: var(--foreground);">Get Started Today</h3>
+                    
+                    <div class="contact-card">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.125rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.25rem;">Email Us</h4>
+                                <p style="color: var(--muted-foreground);">info@smartcity.gov</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-item">
+                            <div class="contact-icon" style="background: linear-gradient(135deg, var(--eco-green), var(--eco-green-light));">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.125rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.25rem;">Call Us</h4>
+                                <p style="color: var(--muted-foreground);">+1 (555) 123-CITY</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+                                    <circle cx="12" cy="10" r="3"></circle>
+                                </svg>
+                            </div>
+                            <div>
+                                <h4 style="font-size: 1.125rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.25rem;">Visit Us</h4>
+                                <p style="color: var(--muted-foreground);">123 Innovation Ave, Tech District</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="contact-form">
+                    <h3 style="font-size: 1.25rem; font-weight: 600; color: var(--foreground); margin-bottom: 0.5rem;">Send us a Message</h3>
+                    <p style="color: var(--muted-foreground); margin-bottom: 1.5rem;">We'll get back to you within 24 hours</p>
+                    
+                    <form onsubmit="submitForm(event)">
+                        <div class="form-group">
+                            <div class="form-row">
+                                <input type="text" class="form-input" placeholder="First Name" required>
+                                <input type="text" class="form-input" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-input" placeholder="Email Address" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-input" placeholder="Subject" required>
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-input form-textarea" placeholder="Your message..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%;">
+                            Send Message
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <line x1="22" y1="2" x2="11" y2="13"></line>
+                                <polygon points="22,2 15,22 11,13 2,9 22,2"></polygon>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-brand">
+                        <div class="logo-icon">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <polygon points="13,2 3,14 12,14 11,22 21,10 12,10 13,2"></polygon>
+                            </svg>
+                        </div>
+                        <span class="logo-text">SmartCity</span>
+                    </div>
+                    <p class="footer-description">
+                        Building tomorrow's urban infrastructure with intelligent technology and sustainable solutions.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11.64 11.64 0 0 1-7 2c9 5 20 0 20-11.5a4.5 4.5 0 0 0-.08-.83A7.72 7.72 0 0 0 23 3z"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"></path>
+                                <rect x="2" y="9" width="4" height="12"></rect>
+                                <circle cx="4" cy="4" r="2"></circle>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                            </svg>
+                        </a>
+                        <a href="#" class="social-link">
+                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                                <polyline points="22,6 12,13 2,6"></polyline>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Services</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Smart Transportation</a></li>
+                        <li><a href="#">Energy Management</a></li>
+                        <li><a href="#">Public Safety</a></li>
+                        <li><a href="#">Environmental Monitoring</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Resources</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">API Reference</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">Support</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>Company</h3>
+                    <ul class="footer-links">
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p style="color: var(--muted-foreground);">© 2024 SmartCity. All rights reserved.</p>
+                <div class="footer-legal">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.querySelector('.header');
+            if (window.scrollY > 50) {
+                header.style.background = 'rgba(17, 24, 39, 0.95)';
+            } else {
+                header.style.background = 'rgba(17, 24, 39, 0.8)';
+            }
+        });
+
+        // Animate elements on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(el);
+        });
+
+        // Animate progress bars when they come into view
+        const progressObserver = new IntersectionObserver(function(entries) {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const progressFill = entry.target.querySelector('.progress-fill');
+                    if (progressFill) {
+                        progressFill.style.width = progressFill.style.width;
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            progressObserver.observe(card);
+        });
+
+        // Mobile menu toggle
+        function toggleMenu() {
+            const nav = document.querySelector('.nav');
+            if (nav.style.display === 'flex') {
+                nav.style.display = 'none';
+            } else {
+                nav.style.display = 'flex';
+                nav.style.position = 'absolute';
+                nav.style.top = '100%';
+                nav.style.left = '0';
+                nav.style.right = '0';
+                nav.style.background = 'var(--card)';
+                nav.style.flexDirection = 'column';
+                nav.style.padding = '1rem';
+                nav.style.borderTop = '1px solid var(--border)';
+            }
+        }
+
+        // Form submission
+        function submitForm(event) {
+            event.preventDefault();
+            
+            // Get form data
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData);
+            
+            // Show success message
+            alert('Thank you for your message! We\'ll get back to you within 24 hours.');
+            
+            // Reset form
+            event.target.reset();
+            
+            // You can add actual form submission logic here
+            console.log('Form submitted:', data);
+        }
+
+        // Add loading animation to buttons
+        document.querySelectorAll('.btn').forEach(button => {
+            button.addEventListener('click', function() {
+                if (this.getAttribute('href') === '#' || this.type === 'submit') {
+                    this.style.transform = 'scale(0.95)';
+                    setTimeout(() => {
+                        this.style.transform = 'scale(1)';
+                    }, 150);
+                }
+            });
+        });
+
+        // Initialize stats counter animation
+        function animateStats() {
+            const statElements = document.querySelectorAll('.stat-value');
+            statElements.forEach(el => {
+                const text = el.textContent;
+                if (text.includes('%')) {
+                    const value = parseInt(text);
+                    if (!isNaN(value)) {
+                        animateCounter(el, 0, value, '%', 2000);
+                    }
+                } else if (text.includes('M')) {
+                    const value = parseFloat(text);
+                    if (!isNaN(value)) {
+                        animateCounter(el, 0, value, 'M', 2000);
+                    }
+                }
+            });
+        }
+
+        function animateCounter(element, start, end, suffix, duration) {
+            const range = end - start;
+            const increment = range / (duration / 16);
+            let current = start;
+            
+            const timer = setInterval(() => {
+                current += increment;
+                if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+                    current = end;
+                    clearInterval(timer);
+                }
+                element.textContent = Math.floor(current * 10) / 10 + suffix;
+            }, 16);
+        }
+
+        // Start animations when page loads
+        window.addEventListener('load', function() {
+            setTimeout(animateStats, 1000);
+        });
+
+        // Add typing effect to hero title
+        function typeWriter(element, text, speed = 100) {
+            let i = 0;
+            element.innerHTML = '';
+            
+            function type() {
+                if (i < text.length) {
+                    element.innerHTML += text.charAt(i);
+                    i++;
+                    setTimeout(type, speed);
+                }
+            }
+            
+            type();
+        }
+
+        // Initialize typing effect
+        window.addEventListener('load', function() {
+            const heroTitle = document.querySelector('.hero-title');
+            const originalText = heroTitle.innerHTML;
+            setTimeout(() => {
+                typeWriter(heroTitle, originalText.replace(/<[^>]*>/g, ''), 50);
+            }, 500);
+        });
+
+        // Add parallax effect to hero background
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const parallax = document.querySelector('.hero-bg');
+            if (parallax) {
+                parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+            }
+        });
+    </script>
+</body>
+</html>
